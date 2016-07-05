@@ -1,0 +1,66 @@
+import pygame
+pygame.init()
+
+display_width = 600
+display_height = 600
+gameDisplay = pygame.display.set_mode((display_width, display_height))
+pygame.display.set_caption('Game')
+
+black = (0,0,0)
+white = (255,255,255)
+
+clock = pygame.time.Clock()
+crashed = False
+
+carImg = pygame.image.load('ball.png')
+
+def car(x, y):
+    gameDisplay.blit(carImg, (x, y))
+
+x = display_width * 0.45
+y = display_height * 0.8
+dx = 0
+dy = 0
+obj_height = 49
+obj_width = 50
+
+while not crashed:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            crashed = True
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                dx = -5
+            elif event.key == pygame.K_RIGHT:
+                dx = 5
+            elif event.key == pygame.K_UP:
+                dy = -5
+            elif event.key == pygame.K_DOWN:
+                dy = 5
+        
+        if event.type == pygame.KEYUP:
+            if (event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT or event.key == pygame.K_UP or event.key == pygame.K_DOWN):
+                dx = 0
+                dy = 0
+
+    x += dx
+    y += dy
+
+    if x < 0:
+        x = 0
+    if x - obj_width  > 800:
+        x = 800
+    
+    if y < 0:
+        y = 0
+    if y - obj_height > 600:
+        y = 600
+
+    gameDisplay.fill(white)
+    car(x, y)
+    pygame.display.update()
+    clock.tick(60)
+
+pygame.quit()
+quit()
