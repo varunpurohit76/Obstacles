@@ -40,6 +40,11 @@ def game_loop():
     obstacle_speed = 5
     obstacle_w = 100
     obstacle_h = 100
+    obstacle_horizontal_x = -600
+    obstacle_horizontal_y = random.randrange(0, display_height)
+    obstacle_horizontal_speed = 5
+    obstacle_horizontal_w = 100
+    obstacle_horizontal_h = 100
     score_start_time = time.time()   
 
     exit_game = False
@@ -82,11 +87,18 @@ def game_loop():
         obstacle(obstacle_x, obstacle_y, obstacle_w, obstacle_h, black)
         obstacle_y += obstacle_speed
 
+        obstacle(obstacle_horizontal_x, obstacle_horizontal_y, obstacle_horizontal_w, obstacle_horizontal_h, black)
+        obstacle_horizontal_x += obstacle_horizontal_speed
+
         if obstacle_y >= display_height:
             obstacle_y = 0 - obstacle_h
             obstacle_x = random.randrange(0, display_width)
             obstacle_speed += 2
             obstacle_w *= 1.2
+        
+        if obstacle_horizontal_x >= display_width:
+            obstacle_horizontal_y = random.randrange(0, display_height)
+            obstacle_horizontal_x = 0 - obstacle_horizontal_w
 
         car(x, y)
         display_score("%0.1f" % (time.time() - score_start_time))
