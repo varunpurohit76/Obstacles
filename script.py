@@ -93,8 +93,8 @@ def game_loop():
         if obstacle_y >= display_height:
             obstacle_y = 0 - obstacle_h
             obstacle_x = random.randrange(0, display_width)
-            obstacle_speed += 2
-            obstacle_w *= 1.2
+            obstacle_speed += 1
+            obstacle_w *= 1.1
         
         if obstacle_horizontal_x >= display_width:
             obstacle_horizontal_y = random.randrange(0, display_height)
@@ -105,6 +105,10 @@ def game_loop():
         
         if y < (obstacle_y + obstacle_h) and (y + obj_height) > obstacle_y:
             if x > obstacle_x and x < obstacle_x + obstacle_w or x + obj_width > obstacle_x and x + obj_width < obstacle_x + obstacle_w:
+                crash()
+
+        if obstacle_horizontal_x + obstacle_horizontal_w > x and obstacle_horizontal_x < x + obj_width:
+            if y < obstacle_horizontal_y and y + obj_height > obstacle_horizontal_y or y > obstacle_horizontal_y and y < obstacle_horizontal_y + obstacle_horizontal_h:
                 crash()
 
         pygame.display.update()
