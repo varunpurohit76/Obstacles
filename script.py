@@ -18,7 +18,7 @@ def message_display(text):
     TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf, TextRect)
     pygame.display.update()
-    time.sleep(2)
+    time.sleep(4)
     game_loop()
 
 def display_score(score):
@@ -27,9 +27,13 @@ def display_score(score):
     gameDisplay.blit(text,(0,0))
 
 def crash():
+    pygame.mixer.Sound.play(crash_sound)
+    pygame.mixer.music.stop()
     message_display('You crashed bruh!')
 
 def game_loop():
+    pygame.mixer.music.load('resources/music.wav')
+    pygame.mixer.music.play(-1)
     x = display_width * 0.5
     y = display_height * 0.5
     dx = 0
@@ -93,12 +97,13 @@ def game_loop():
         if obstacle_y >= display_height:
             obstacle_y = 0 - obstacle_h
             obstacle_x = random.randrange(0, display_width)
-            obstacle_speed += 1
+            obstacle_speed += 0.75
             obstacle_w *= 1.1
         
         if obstacle_horizontal_x >= display_width:
             obstacle_horizontal_y = random.randrange(0, display_height)
             obstacle_horizontal_x = 0 - obstacle_horizontal_w
+            obstacle_horizontal_h *= 1.1
 
         car(x, y)
         display_score("%0.1f" % (time.time() - score_start_time))
@@ -115,6 +120,7 @@ def game_loop():
         clock.tick(60)
 
 pygame.init()
+crash_sound = pygame.mixer.Sound('resources/crash.wav')
 display_width = 800
 display_height = 600
 obj_height = 50
@@ -125,7 +131,7 @@ black = (0,0,0)
 white = (255,255,255)
 red = (255,0,0)
 clock = pygame.time.Clock()
-carImg = pygame.image.load('obj.png')
+carImg = pygame.image.load('resources/obj.png')
 game_loop()
 pygame.quit()
 quit()
