@@ -5,6 +5,10 @@ import random
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
 
+def quitgame():
+    pygame.quit()
+    quit()
+
 def text_objects(text, font):
     textSurface = font.render(text, True, red)
     return textSurface, textSurface.get_rect()
@@ -56,8 +60,7 @@ def game_loop():
     while not exit_game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
+                quitgame()
         
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
